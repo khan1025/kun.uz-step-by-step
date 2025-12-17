@@ -240,5 +240,16 @@ public class ArticleService {
         return new PageImpl<>(articleDTOList, PageRequest.of(page, size), result.getTotal());
     }
 
+    private ArticleDTO toDTO(Object[] entity) {
+
+        ArticleDTO dto = new ArticleDTO();
+        dto.setId(entity[0].toString());
+        dto.setTitle(entity[1].toString());
+        dto.setDescription(entity[2].toString());
+        dto.setContent(entity[3].toString());
+        dto.setImageId(entity[4].toString());
+        return dto;
+    }
+
 
 }
