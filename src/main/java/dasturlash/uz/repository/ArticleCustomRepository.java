@@ -54,7 +54,6 @@ public class ArticleCustomRepository {
         StringBuilder countBuilder = new StringBuilder("Select count(*) From article a");
         selectBuilder.append(condition);
         countBuilder.append(condition);
-
         selectBuilder.append(" GROUP BY a.title, a.region_id, a.category_id, a.published_date_from, a.published_date_to ");
         countBuilder.append(" GROUP BY a.title, a.region_id, a.category_id, a.published_date_from, a.published_date_to");
         //
