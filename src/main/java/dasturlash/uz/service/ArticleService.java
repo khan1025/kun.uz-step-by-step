@@ -3,11 +3,15 @@ package dasturlash.uz.service;
 import dasturlash.uz.dto.FilterResultDTO;
 import dasturlash.uz.dto.article.ArticleCreateDTO;
 import dasturlash.uz.dto.article.ArticleDTO;
+import dasturlash.uz.dto.article.ArticleFilterDTO;
+import dasturlash.uz.dto.profile.ProfileDTO;
+import dasturlash.uz.dto.profile.ProfileFilterDTO;
 import dasturlash.uz.entity.ArticleEntity;
 import dasturlash.uz.enums.AppLanguageEnum;
 import dasturlash.uz.enums.ArticleStatus;
 import dasturlash.uz.exceptions.AppBadException;
 import dasturlash.uz.mapper.ArticleShortInfo;
+import dasturlash.uz.repository.ArticleCustomRepository;
 import dasturlash.uz.repository.ArticleRepository;
 import dasturlash.uz.util.SpringSecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +45,8 @@ public class ArticleService {
     @Autowired
     private CategoryService categoryService;
 
-//    @Autowired
-//    private ArticleCustomRepository articleCustomRepository;
+    @Autowired
+    private ArticleCustomRepository articleCustomRepository;
 
 
     // 1
@@ -229,6 +233,12 @@ public class ArticleService {
         });
     }
 
+    public PageImpl<ArticleDTO> filter(ArticleFilterDTO filterDTO, int page, int size) {
+        FilterResultDTO<Object[]> result = articleCustomRepository.filter(filterDTO, page, size);
+        List<ArticleDTO> articleDTOList = new LinkedList<>();
+        result.getContent().forEach(entity -> articleDTOList.add(toDTO(entity)));
+        return new PageImpl<>(articleDTOList, PageRequest.of(page, size), result.getTotal());
+    }
 
 
 }

@@ -73,6 +73,5 @@ public class ArticleCustomRepository {
 
         return new FilterResultDTO<>(articleList, totalCount);
 
-
     }
 }
